@@ -9,6 +9,8 @@ import axios from 'axios'
 Vue.prototype.axios = axios
 Vue.config.productionTip = false
 
+console.log("--", process.env);
+
 new Vue({
   router,
   store,
