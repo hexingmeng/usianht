@@ -25,6 +25,17 @@ export default {
       .catch(error => {
         console.log(error)
       })
+
+    axios({
+      url: '/dev1-api/',
+      method: 'GET'
+    })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

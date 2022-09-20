@@ -10,10 +10,17 @@ module.exports = defineConfig({
     //配置跨域
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: "http://localhost:3000",
+        target: "VUE_APP_D1",
         changeOrigin: true,
         pathRewrite: {
           ["^" + process.env.VUE_APP_BASE_API]: ''
+        }
+      },
+      [process.env.VUE_APP_BASE_API1]: {
+        target: "VUE_APP_S1",
+        changeOrigin: true,
+        pathRewrite: {
+          ["^" + process.env.VUE_APP_BASE_API1]: ""
         }
       }
       // "/dev-api": {
