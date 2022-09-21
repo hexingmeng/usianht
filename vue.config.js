@@ -6,16 +6,23 @@ module.exports = defineConfig({
     port: 8888,
     host: "localhost",
     open: true,
-    https: false,
+    https: true,
     //配置跨域
     proxy: {
-      [process.env.VUE_APP_BASE_API]: {
-        target: process.env.VUE_APP_D1,
+      [process.env.VUE_APP_S_U]: {
+        target: "https://mock.mengxuegu.com/mock/632aaad6eb2aea51d36d17d7/v2",
         changeOrigin: true,
         pathRewrite: {
-          ["^" + process.env.VUE_APP_BASE_API]: ''
+          ["^" + process.env.VUE_APP_S_U]: ""
         }
       }
+      // [process.env.VUE_APP_BASE_API]: {
+      //   target: process.env.VUE_APP_D1,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     ["^" + process.env.VUE_APP_BASE_API]: ''
+      //   }
+      // }
       // [process.env.VUE_APP_BASE_API1]: {
       //   target: process.env.VUE_APP_S1,
       //   changeOrigin: true,
