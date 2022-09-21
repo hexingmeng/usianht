@@ -8,34 +8,66 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
-import axios from 'axios'
+import TestApi from '../api/text'
 export default {
   name: 'HomeView',
+  data() {
+    return {
+      page: 1,
+      size: 10
+    }
+  },
   components: {
     HelloWorld
   },
   created() {
-    axios({
-      url: process.env.VUE_APP_BASE_API + '/',
-      method: 'GET'
-    })
+    TestApi.getMemberList(this.page, this.size)
       .then(response => {
-        console.log(response)
+        console.log('member=>', response)
       })
       .catch(error => {
         console.log(error)
       })
 
-    axios({
-      url: '/dev1-api/',
-      method: 'GET'
-    })
+    // TestApi.getMemberList(this.text).then(re => {
+    //   console.log(res, 'res1')
+    // })
+
+    TestApi.getSupplierList(this.page, this.size)
       .then(response => {
-        console.log(response)
+        console.log('supplier=>', response)
       })
       .catch(error => {
         console.log(error)
       })
+
+    // TestApi.getNewList()
+    //   .then(response => {
+    //     console.log(response)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    // request({
+    //   url: process.env.VUE_APP_BASE_API + '/',
+    //   method: 'GET'
+    // })
+    //   .then(response => {
+    //     console.log(response)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    // request({
+    //   url: process.env.VUE_APP_BASE_API1 + '/',
+    //   method: 'GET'
+    // })
+    //   .then(response => {
+    //     console.log(response)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
   }
 }
 </script>
