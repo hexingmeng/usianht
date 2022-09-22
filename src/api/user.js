@@ -14,4 +14,11 @@ export const getUserInfo = () => {
   })
 }
 
-login({ username: "admin", password: "admin" })
+export const logout = () => {
+  return request({
+    url: "/admin/logout",
+    method: "POST"
+  })
+}
+
+// login({ username: "admin", password: "admin" })
