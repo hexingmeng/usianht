@@ -1,10 +1,17 @@
 import request from "../utils/request"
 export const login = (data = {}) => {
   return request({
-    url: "/admin/login",
+    url: '/admin/login',
     method: "POST",
     data
   })
 }
 
-// login({ username: "admin", password: "admin" })
+export const getUserInfo = () => {
+  return request({
+    url: "/admin/getUserInfo",
+    method: "GET"
+  })
+}
+
+login({ username: "admin", password: "admin" })

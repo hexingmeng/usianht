@@ -8,6 +8,8 @@ const exceptionMessage = {
 
 import { Message } from "element-ui"
 
+import store from "@/store";
+
 const service = axios.create({
   baseURL: process.env.VUE_APP_S_U,
   timeout: 5000
@@ -15,6 +17,8 @@ const service = axios.create({
 
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
+  const token = store.getters.token
+  if (token) config.headers.Authorization = "Bearer" + token
   return config;
 }, function (error) {
   return Promise.reject(error);
@@ -24,14 +28,13 @@ service.interceptors.request.use(function (config) {
 service.interceptors.response.use(function (response) {
   console.log('--', response)
   if (response.status < 400) {
-    _showError(response.data.code, response.data.message)
 
     return response.data.data
   }
   if (response.status === 401) {
     return response.data.data
   }
-
+  _showError(response.data.code, response.data.message)
   return response;
 }, function (error) {
   return Promise.reject(error);

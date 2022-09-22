@@ -10,7 +10,7 @@ module.exports = defineConfig({
     //配置跨域
     proxy: {
       [process.env.VUE_APP_S_U]: {
-        target: "https://mock.mengxuegu.com/mock/632aaad6eb2aea51d36d17d7/v2",
+        target: process.env.VUE_APP_SERVICE_URL,
         changeOrigin: true,
         pathRewrite: {
           ["^" + process.env.VUE_APP_S_U]: ""

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { login } from '../api/user'
+import { login, getUserInfo } from '../api/user'
 export default {
   name: '',
   components: {},
@@ -51,8 +51,17 @@ export default {
     async handleLogin() {
       try {
         const response = await login(this.loginForm)
-        console.log('response=>', response)
-        console.log('token=>', response.token)
+        // console.log('response=>', response)
+        // console.log('token=>', response['token'])
+        this.$store.dispatch('DIS_SET_TOKEN', response.token)
+        const userInfo = await getUserInfo()
+        // console.log('userInfo=>', userInfo)
+        // console.log(userInfo)
+
+        this.$store.dispatch('DIS_SET_USER_INFO', userInfo)
+        this.$message.success('登录成功')
+        //跳转主页
+        this.$router.push('/')
       } catch (e) {
         console.log(e.message)
       }

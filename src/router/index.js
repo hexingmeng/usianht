@@ -10,11 +10,38 @@ const routes = [
     name: 'login',
     component: Login
   },
-  // {
-  //   path: '/Login',
-  //   name: 'login',
-  //   component: () => import('../page/Login.vue')
-  // }
+  {
+    path: '/',
+    name: 'layout',
+    component: () => import('../layout'),
+    children: [
+      {
+        path: 'index',
+        name: 'idnex',
+        component: () => import('../views/index'),
+      },
+      {
+        path: 'member',
+        name: 'member',
+        component: () => import('../views/member'),
+      },
+      {
+        path: 'supplier',
+        name: 'supplier',
+        component: () => import('../views/supplier'),
+      },
+      {
+        path: 'goods',
+        name: 'goods',
+        component: () => import('../views/goods'),
+      },
+      {
+        path: 'staff',
+        name: 'staff',
+        component: () => import('../views/staff'),
+      }
+    ]
+  }
 ]
 
 const router = new VueRouter({
