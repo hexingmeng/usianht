@@ -1,17 +1,25 @@
 <template>
   <div>
-    <router-view></router-view>
+    <app-link v-if="controllLink"></app-link>
+    <div class="view">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
+import AppLink from './Link.vue'
 export default {
   name: '',
-  components: {},
+  components: { AppLink },
   data() {
     return {}
   },
-  created() {},
+  computed: {
+    controllLink() {
+      return !(this.$route.path === '/index')
+    }
+  },
   mounted() {},
   methods: {}
 }
