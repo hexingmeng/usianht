@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu
-      default-active="1"
+      :default-active="activePath"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
@@ -40,7 +40,12 @@ export default {
   },
   created() {},
   mounted() {},
-  methods: {}
+  methods: {},
+  computed: {
+    activePath() {
+      return this.$route.path
+    }
+  }
 }
 </script>
 <style scoped lang='scss'>
