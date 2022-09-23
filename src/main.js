@@ -11,6 +11,9 @@ Vue.config.productionTip = false
 
 // console.log("--", process.env.VUE_APP_SERVICE_URL);
 import "./style/reset.css"
+
+import "./permission"
+
 new Vue({
   router,
   store,

@@ -1,4 +1,4 @@
-import { getToken, setToken, setUserInfo, getUserInfo, remiveTokenAndUserInfo } from '@/utils/auth'
+import { getToken, setToken, setUserInfo, getUserInfo } from '@/utils/auth'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { login, userInfo, logout } from "../api/user"
@@ -28,6 +28,7 @@ export default new Vuex.Store({
     SET_USER_INFO (state, userInfo) {
       console.log(userInfo)
       state.userInfo = userInfo
+      console.log(userInfo, 'SET_USER_INFO');
       setUserInfo(userInfo)
     }
   },
@@ -46,6 +47,7 @@ export default new Vuex.Store({
     async handleUserInfo ({ commit }) {
       try {
         const userinfo = await userInfo()
+        console.log(userinfo, 'userinfouserinfouserinfouserinfouserinfo');
         commit("SET_USER_INFO", userinfo)
         return userInfo
       } catch (e) {
@@ -53,13 +55,14 @@ export default new Vuex.Store({
       }
     },
 
-    // DIS_SET_TOKEN ({ commit }, token) {
-    //   commit("SET_TOKEN", token)
-    // },
-    // DIS_SET_USER_INFO ({ commit }, userInfo) {
-    //   commit("SET_USER_INFO", userInfo)
-    // },
+    DIS_SET_TOKEN ({ commit }, token) {
+      commit("SET_TOKEN", token)
+    },
+    DIS_SET_USER_INFO ({ commit }, userInfo) {
+      commit("SET_USER_INFO", userInfo)
+    },
     async handleLogout ({ commit }) {
+      console.log('aaaaaaaaaaa');
       const response = await logout()
       commit("SET_TOKEN", "")
       commit("SET_USER_INFO", "")
