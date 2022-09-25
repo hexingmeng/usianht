@@ -1,43 +1,26 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: "./",
+  // publicPath: "./",
   devServer: {
+    // 端口号
     port: 8888,
+    // 主机名
     host: "localhost",
+    // 项目启动时是否自动开启浏览器
     open: true,
-    https: true,
-    //配置跨域
+    // 是否开启https
+    https: false,
+    // 配置跨域
     proxy: {
-      [process.env.VUE_APP_S_U]: {
-        target: process.env.VUE_APP_SERVICE_URL,
+      [process.env.VUE_APP_BASE_API]: {
+        target: process.env.Vue_APP_SERVICE_URL,
         changeOrigin: true,
         pathRewrite: {
-          ["^" + process.env.VUE_APP_S_U]: ""
-        }
-      }
-      // [process.env.VUE_APP_BASE_API]: {
-      //   target: process.env.VUE_APP_D1,
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     ["^" + process.env.VUE_APP_BASE_API]: ''
-      //   }
-      // }
-      // [process.env.VUE_APP_BASE_API1]: {
-      //   target: process.env.VUE_APP_S1,
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     ["^" + process.env.VUE_APP_BASE_API1]: ""
-      //   }
-      // }
-      // "/dev-api": {
-      //   target: "http://localhost:3000",
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     "^/dev-api": ''
-      //   }
-      // }
-    }
+          ["^" + process.env.VUE_APP_BASE_API]: "",
+        },
+      },
+    },
   },
-  lintOnSave: false
-})
+  lintOnSave: false,
+});

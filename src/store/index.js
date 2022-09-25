@@ -1,9 +1,9 @@
-import { getToken, setToken, setUserInfo, getUserInfo, remiveTokenAndUserInfo } from '@/utils/auth'
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { login, logout } from "../api/user"
+import Vue from "vue";
+import Vuex from "vuex";
+import { login, userInfo, logout } from "../api/user.js";
+import { setToken, getToken, setUserInfo, getUserInfo, removeTokenAndUserInfo } from "../untils/auth";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -11,63 +11,55 @@ export default new Vuex.Store({
     userInfo: getUserInfo() || ""
   },
   getters: {
-    token (state) {
+    token(state) {
       return state.token
     },
-    userInfo (state) {
+    userInfo(state) {
       return state.userInfo
     }
   },
   mutations: {
-    SET_TOKEN (state, token) {
-      console.log(token);
+    SET_TOKEN(state, token) {
       state.token = token
       setToken(token)
-      // localStorage.setItem()
     },
-    SET_USER_INFO (state, userInfo) {
-      // console.log(userInfo)
+    SET_USER_INFO(state, userInfo) {
       state.userInfo = userInfo
       setUserInfo(userInfo)
     }
   },
   actions: {
-
-    async login ({ commit }, loginFrom) {
+    // 登录
+    async login({ commit }, loginForm) {
       try {
-        const response = await login(loginFrom)
-        commit("SET_TOKEN", response.token)
-        return response.token
+        const reaponse = await login(loginForm);
+        commit("SET_TOKEN", reaponse.token);
+        return reaponse.token
       } catch (e) {
         console.log(e.message);
       }
-    },
 
-    async handleUserInfo ({ commit }) {
+    },
+    // 获取用户信息
+    async handleUserInfo({ commit }) {
       try {
-        const userinfo = await userInfo()
-        commit("SET_USER_INFO", userinfo)
-        return userInfo
+        const userinfo = await userInfo();
+        commit("SET_USER_INFO", userinfo);
+        return userinfo
       } catch (e) {
         console.log(e.message);
       }
+
     },
 
-    DIS_SET_TOKEN ({ commit }, token) {
-      commit("SET_TOKEN", token)
-    },
-    DIS_SET_USER_INFO ({ commit }, userInfo) {
-      commit("SET_USER_INFO", userInfo)
-    },
-    async handleLogout ({ commit }) {
-      const response = await logout()
-      commit("SET_TOKEN", "")
-      commit("SET_USER_INFO", "")
-      // remiveTokenAndUserInfo()
-      // console.log(response);
-      return response
+    // 退出登录
+    async handleLogout({ commit }) {
+      const response= await logout()
+      commit("SET_TOKEN")
+      commit("SET_USER_INFO")
+      removeTokenAndUserInfo()
+      return response;
     }
   },
-  modules: {
-  }
-})
+  modules: {},
+});

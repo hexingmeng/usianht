@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div class="layout">
+    <!-- 布局 -->
     <el-container>
       <el-header>
-        <app-header></app-header>
+        <appHeader></appHeader>
       </el-header>
       <el-container>
-        <el-aside width="230px">
-          <app-aside></app-aside>
+        <el-aside width="200px">
+          <appAside></appAside>
         </el-aside>
         <el-main>
-          <app-main></app-main>
+          <appMain></appMain>
         </el-main>
       </el-container>
     </el-container>
@@ -17,47 +18,44 @@
 </template>
 
 <script>
-import AppAside from '../layout/AppAside'
-import AppMain from '../layout/AppMain'
-import AppHeader from '../layout/AppHeader'
+import appHeader from "@/layout/AppHeader";
+// import appAside from "@/layout/AppAside";
+import appMain from "@/layout/AppMain";
+import appAside from "@/layout/AppAside";
+
 export default {
-  name: '',
+  name: "layout",
+
   components: {
-    AppHeader,
-    AppAside,
-    AppMain
+    appHeader,
+    appAside,
+    appMain,
   },
-  data() {
-    return {}
-  },
-  created() {},
-  mounted() {},
-  methods: {}
-}
+};
 </script>
-<style scoped lang='scss'>
+
+<style lang="scss" scoped>
+.layout,
+.el-container {
+  height: 100%;
+}
 .el-header {
-  background-color: #2e3a4b;
-  color: rgb(255, 255, 255);
-  height: 50px;
-  line-height: 50px;
-  img {
-    width: 25px;
-    float: left;
-    margin-top: 13px;
-    margin-right: 10px;
-  }
+  height: 60px;
+  line-height: 60px;
+  background-color: #2d3a4b;
+  color: #fff;
+  padding: 0;
 }
 
 .el-aside {
-  background-color: #555c64;
+  background-color: #d3dce6;
   color: #333;
-  height: 93.1vh;
-  overflow: auto;
+  height: 100%;
 }
 
 .el-main {
   background-color: #e9eef3;
   color: #333;
+  height: 100%;
 }
 </style>
