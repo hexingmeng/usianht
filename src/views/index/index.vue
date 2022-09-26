@@ -5,8 +5,8 @@
 </template>
 
 <style lang="scss" scoped>
-.index{
-    text-align: center;
+.index {
+  text-align: center;
 }
 h2 {
   display: block;

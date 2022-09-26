@@ -1,109 +1,103 @@
 <template>
-  <div id="Login-page">
-    <div class="login-box">
-      <h2 class="login-title">积云会员管理系统</h2>
-      <el-form :model="loginForm" :rules="rules" ref="form" label-width="80px">
-        <el-form-item label="账户" prop="username">
-          <el-input v-model.trim="loginForm.username"></el-input>
+  <div class="login">
+    <div class="box">
+      <h1>积云会员后台系统</h1>
+      <el-form
+        :model="form"
+        :rules="rules"
+        ref="ruleForm"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="账号" prop="username">
+          <el-input v-model.trim="form.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model.trim="loginForm.password"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="handleLoginSubmit">登录</el-button>
+          <el-input v-model.trim="form.password"></el-input>
         </el-form-item>
       </el-form>
+      <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
     </div>
   </div>
 </template>
-
 <script>
-
 export default {
   data() {
     return {
-      loginForm: {
-        username: "",
-        password: "",
+      form: {
+        username: '',
+        password: ''
       },
       rules: {
         username: [
-          { required: true, message: "账号不能为空", trigger: "blur" },
-          { min: 3, max: 8, message: "请输入 3 到 8 个字符", trigger: "blur" },
+          { required: true, message: '请输入账号', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        password: [
-          { required: true, message: "密码不能为空", trigger: "blur" },
-        ],
-      },
-    };
-  },
-  methods: {
-    // 点击登录按钮进行表单验证
-    handleLoginSubmit() {
-      this.$refs["form"].validate((valid) => {
-        if (!valid) return;
-        // 校验表单之后执行的登录方法
-        this.hanldeLogin();
-      });
-    },
-
-    // 登录方法
-    async hanldeLogin(){
-      
-      const token=await this.$store.dispatch('login',this.loginForm);
-      if(!token) return
-      const userInfo=await this.$store.dispatch('handleUserInfo')
-      if(!userInfo) return
-      this.$message.success("登录成功")
-      this.$router.push('/')
-    }
-    // 登录方法
-    // async hanldeLogin() {
-      // try {
-        // 调用登录接口
-        // const response = await login(this.loginForm);
-        // 将token存到vuex 以及本地
-        // this.$store.dispatch("DIS_SET_TOKEN", response.token)
-        // 调用获取用户信息接口
-        // const userInfo=await getUserInfo()
-        // console.log(userInfo);
-        // 将用户信息存储到本地或者vuex
-        // this.$store.dispatch("DIS_SET_USER_INFO",userInfo);
-        // 登陆成功提示
-        // this.$message.success("登录成功") 
-        // 跳转到主页
-        // this.$router.push('/')
-      // } catch (e) {
-        // console.log(e.message);
-      // }
-    // },
-  },
-};
-</script>
-
-<style lang="scss" scoped>
-#Login-page {
-  width: 100%;
-  height: 100%;
-  background-image: url("http://vue.mengxuegu.com/img/login.b665435f.jpg");
-  position: absolute;
-  .login-box {
-    width: 450px;
-    margin: 160px auto;
-    background-color: hsla(0, 0%, 100%, 0.8);
-    padding: 28px;
-    border-radius: 20px;
-    text-align: center;
-    h2 {
-      margin: 20px auto;
-    }
-    .el-form {
-      margin: 0 auto;
-      .el-button {
-        float: left;
-        width: 270px;
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
     }
+  },
+  methods: {
+    // 登录
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          // 调用登录的api
+          this.handleLogin()
+        } else {
+          console.log('请输入账号或密码')
+          return false
+        }
+      })
+    },
+    // 调取登录的api
+    // 使用async 和await时必须要使用try和catch接收请求的成功或失败
+    async handleLogin() {
+      // 调用vuex中的登录请求
+      const token = await this.$store.dispatch('login', this.form)
+      // 如果获取不到token就直接把错误返回出去
+      if (!token) return
+      // 调用vuex中的用户请求
+      const userinfo = await this.$store.dispatch('handleUserInfo')
+      // 如果获取不到用户信息就直接把错误返回出去
+      if (!userinfo) return
+      // 给个登录成功的提示
+      this.$message.success('登录成功')
+      // 跳转到首页
+      this.$router.push('/')
+      // 将登录请求写在登录页面
+      // try {
+      //   const response = await getLogin(this.form);
+      //   console.log("response=>", response);
+      //   console.log("token=>", response.token);
+      // } catch (e) {
+      //   console.log(e);
+      // }
+    }
   }
+}
+</script>
+<style lang="scss" scoped>
+.login {
+  background-image: url('http://vue.mengxuegu.com/img/login.b665435f.jpg');
+  height: 100%;
+  padding-top: 200px;
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .box {
+    width: 350px;
+    padding: 60px;
+    background-color: rgba(250, 250, 250, 0.5);
+    color: #000;
+    margin: auto;
+    border-radius: 20px;
+  }
+}
+.el-button {
+  margin-left: 100px;
 }
 </style>

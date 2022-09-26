@@ -1,11 +1,9 @@
 <template>
-  <div id="appMain">
-    <AppLink v-if="controllLink"></AppLink>
-    
+  <div>
+    <app-link v-if="controllLink"></app-link>
     <router-view></router-view>
   </div>
 </template>
-
 <script>
 import AppLink from "./Link.vue";
 export default {
@@ -19,3 +17,5 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+</style>

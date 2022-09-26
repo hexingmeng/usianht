@@ -1,37 +1,44 @@
-// 引入路由对象
+// 引入路由实例对象
 import router from "./router"
-
 // 引入vuex
-import store from "./store";
-
-// 创建路由首位，实现页面鉴权
+import store from "./store"
 router.beforeEach(async (to, from, next) => {
-    const token = store.getters.token
-    if (token) {
-        // 已登录的逻辑
-        if (to.path === "/login") {
-            next(from.path)
+  // 获取vuex中token
+  const token = store.getters.token
+  // 判断能不能获取到token
+  if (token) {
+    next()
+    // 如果vuex中已经有token了，判断是否跳转的页面是登录页面
+    if (to.path == '/login') {
+      // 如果是登录页面就跳转到上一个页面
+      next(from.path)
+    } else {
+      // 获取用户信息
+      let userInfo = store.getters.userInfo
+      // 检测一下userInfo是不是object类型如果是的话就转换成字符串类型如果不是一个对象就还是他本身
+      userInfo = typeof userInfo === 'object' ? JSON.stringify(userInfo) : userInfo
+      // 判断是否为空，如果为空就获取用户信息
+      if (userInfo === '{}' || userInfo === '') {
+        // 调用vuex中的方法获取用户信息
+        const response = await store.dispatch('handleUserInfo')
+        // 判断是否获取到用户信息
+        if (response) {
+          // 获取到了就放行
+          next()
         } else {
-            // 获取用户信息
-            let userInfo = store.getters.userInfo
-            userInfo = typeof userInfo === "object" ? JSON.stringify(userInfo) : userInfo
-            if (userInfo === "{}" || userInfo === "") {
-                const response = await store.dispatch("handleUserInfo")
-                if(response){
-                    next()
-                }else{
-                    next("/login")
-                }
-            }else{
-                next()
-            }
+          // 没获取到就跳转到登录页面
+          next('/login')
         }
 
-    } else {
-        if (to.path === "/login") {
-            next()
-        } else {
-            next('/login')
-        }
+      }
     }
+  } else {
+    if (to.path == '/login') {
+      next()
+    } else {
+      next('/login')
+    }
+
+  }
+
 })

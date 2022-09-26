@@ -1,17 +1,18 @@
 <template>
-  <div class="appHeader">
-    <router-link class="hearderLink" to="/">
+  <div>
+    <!-- 左侧logo -->
+    <router-link to="/" class="link">
       <img
+        class="logo"
         src="http://vue.mengxuegu.com/img/logo.7156be27.png"
         alt="logo"
-        width="28"
-        class="linkImg"
       />
-      <span class="linkTitle">积云会员管理系统</span>
+      <span class="header-size">积云会员后台系统</span>
     </router-link>
-    <el-dropdown @command="handleCommand" class="headerDropdown">
+    <!-- 下拉菜单 -->
+    <el-dropdown @command="handleCommand">
       <span class="el-dropdown-link">
-        {{ $store.getters.userInfo.name || ""
+        {{ $store.getters.userInfo.name
         }}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
@@ -19,65 +20,70 @@
           >修改密码</el-dropdown-item
         >
         <el-dropdown-item icon="el-icon-s-fold" command="logout"
-          >退出登录</el-dropdown-item
+          >退出系统</el-dropdown-item
         >
       </el-dropdown-menu>
     </el-dropdown>
   </div>
 </template>
-
 <script>
 export default {
   methods: {
+    // 下拉点击
     handleCommand(command) {
-      console.log(command);
+      // 判断下拉框选中的是哪个
+      // switch(判断的条件)
       switch (command) {
+        // 如果是修改密码就执行修改密码的方法
+        // case "值"
         case "changePass":
-          this.handleChangePass();
+          this.handlechangePass();
+          //break // 如果不是就结束当前语句继续执行
           break;
         case "logout":
-          this.handleLogout();
-          break;
+          this.handelogout();
       }
     },
     // 修改密码
-    handleChangePass() {
+    handlechangePass() {
       alert("修改密码");
     },
     // 退出登录
-    async handleLogout() {
-      const response = await this.$store.dispatch("handleLogout");
-      // if (!response.flag) return;
-      this.$router.push("/login");
+    async handelogout() {
+      try {
+        const response = await this.$store.dispatch("handlelogout");
+        //    设置个定时器
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 300);
+        //    给个提示
+        this.$message.success("退出成功");
+      } catch (e) {
+        console.log(e.message);
+      }
     },
   },
 };
 </script>
-
-
-
 <style lang="scss" scoped>
-.appHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .hearderLink {
-    text-decoration: none;
-    color: #fff;
-    .linkImg {
-      vertical-align: middle;
-      margin-left: 40px;
-    }
-    .linkTitle {
-      margin-left: 20px;
-      font-size: 20px;
-      vertical-align: middle;
-    }
+// 左侧logo
+.link {
+  margin-left: 20px;
+  .logo {
+    width: 25px;
+    vertical-align: middle;
   }
-  .headerDropdown {
-    color: #fff;
-    margin-right: 40px;
+  .header-size {
+    margin-left: 10px;
     font-size: 16px;
+    color: #fff;
+    vertical-align: middle;
   }
+}
+// 右侧下拉菜单
+.el-dropdown {
+  float: right;
+  margin-right: 20px;
+  color: #fff;
 }
 </style>

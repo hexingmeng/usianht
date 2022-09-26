@@ -1,14 +1,12 @@
 <template>
-  <div>
+  <div class="home">
     <el-menu
       :default-active="activePath"
-      class="el-menu-vertical-demo"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
       router
     >
-     
       <el-menu-item index="/index">
         <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
@@ -34,15 +32,12 @@
 </template>
 <script>
 export default {
-  computed:{
-    activePath(){
+  computed: {
+    activePath() {
       return this.$route.path
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-div,.el-menu-vertical-demo{
-    height: 100%;
-}
+<style>
 </style>
